@@ -91,8 +91,8 @@ npm run test:coverage
 - **Outcome:** Issue persists. This is a [well-documented problem](https://github.com/nodkz/mongodb-memory-server/issues/915) on Windows.
 - **Workaround:** Document the error and troubleshooting steps. Backend tests may not run on Windows.
 
-### 2. E2E Testing: Cypress Fails to Install/Verify on Windows
-- **Symptom:** Cypress install or verification times out or fails on Windows.
+### 2. E2E Testing: Cypress
+- **Status:** E2E (Cypress) tests are now working and passing, as shown in the screenshot below.
 - **Troubleshooting Steps Attempted:**
   - Cleared Cypress cache
   - Reinstalled Cypress
@@ -100,8 +100,7 @@ npm run test:coverage
   - Ran as administrator
   - Shortened project path
   - Tried older Cypress versions
-- **Outcome:** Issue persists. See [Cypress Windows install issues](https://github.com/cypress-io/cypress/issues/19299).
-- **Workaround:** Document the error and troubleshooting steps. E2E tests may not run on Windows.
+- **Outcome:** E2E tests are now running and passing successfully.
 
 ---
 
@@ -129,7 +128,7 @@ npm run test:coverage
   
 - **E2E (Cypress) Tests (Passing):**
   
-  ![E2E Tests Passing](./ese-tests.png)
+  ![E2E Tests Passing](./e2e-tests.png)
   
   The screenshot above shows a successful Cypress E2E test run (`smoke.cy.js`), with all specs passing.
 
@@ -139,7 +138,7 @@ npm run test:coverage
 - Ensured Babel and Jest are configured for JSX in the frontend (`@babel/preset-env`, `@babel/preset-react`, `babel-jest`).
 - All frontend unit tests and coverage pass.
 - Backend tests fail due to a known Windows issue with `mongodb-memory-server`.
-- E2E (Cypress) tests could not be run due to persistent verification timeouts on Windows.
+- E2E (Cypress) tests are now running and passing successfully.
 - All troubleshooting steps and known issues are documented above.
 
 ---
@@ -153,5 +152,5 @@ npm run test:coverage
 ## Submission Checklist
 - [x] All frontend tests and coverage passing (with screenshot)
 - [x] Backend test error and troubleshooting documented (with screenshot)
-- [x] E2E (Cypress) error and troubleshooting documented (with screenshot, if attempted)
+- [x] E2E (Cypress) tests passing and documented (with screenshot)
 - [x] README updated with all steps, issues, and references 
