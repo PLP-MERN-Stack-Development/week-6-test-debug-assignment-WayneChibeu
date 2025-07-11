@@ -127,8 +127,11 @@ npm run test:coverage
   
   ![Backend Test Error](./backend-error.PNG)
   
-- **E2E (Cypress) Error:**
-  - Include a screenshot of the Cypress install/verification error, if attempted.
+- **E2E (Cypress) Tests (Passing):**
+  
+  ![E2E Tests Passing](./ese-tests.png)
+  
+  The screenshot above shows a successful Cypress E2E test run (`smoke.cy.js`), with all specs passing.
 
 ---
 
