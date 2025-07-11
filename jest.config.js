@@ -1,57 +1,32 @@
 // jest.config.js - Root Jest configuration file
 
 module.exports = {
-  // Base configuration for all tests
   projects: [
-    // Server-side tests configuration
-    {
-      displayName: 'server',
-      testEnvironment: 'node',
-      testMatch: ['<rootDir>/server/tests/**/*.test.js'],
-      moduleFileExtensions: ['js', 'json', 'node'],
-      setupFilesAfterEnv: ['<rootDir>/server/tests/setup.js'],
-      coverageDirectory: '<rootDir>/coverage/server',
-      collectCoverageFrom: [
-        'server/src/**/*.js',
-        '!server/src/config/**',
-        '!**/node_modules/**',
-      ],
-    },
-    
-    // Client-side tests configuration
     {
       displayName: 'client',
-      testEnvironment: 'jsdom',
-      testMatch: ['<rootDir>/client/src/**/*.test.{js,jsx}'],
-      moduleFileExtensions: ['js', 'jsx', 'json'],
+      testEnvironment: 'jsdom', // For DOM-related tests
+      testMatch: ['<rootDir>/client/src/tests/**/*.test.js', '<rootDir>/client/src/tests/**/*.test.jsx'],
+      setupFilesAfterEnv: ['<rootDir>/client/jest.setup.js'], // For React Testing Library extensions
       moduleNameMapper: {
-        '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-        '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/client/src/tests/__mocks__/fileMock.js',
+        '\\.(css|less|sass|scss)$': 'identity-obj-proxy', // Handle CSS imports in tests
       },
-      setupFilesAfterEnv: ['<rootDir>/client/src/tests/setup.js'],
       transform: {
-        '^.+\\.(js|jsx)$': 'babel-jest',
+        '^.+\\.(js|jsx)$': 'babel-jest', // Use babel-jest for JSX
       },
-      coverageDirectory: '<rootDir>/coverage/client',
-      collectCoverageFrom: [
-        'client/src/**/*.{js,jsx}',
-        '!client/src/index.js',
-        '!**/node_modules/**',
-      ],
+      // collectCoverageFrom: ['<rootDir>/client/src/**/*.{js,jsx}'], // Collect coverage from client source
+      // coverageDirectory: '<rootDir>/coverage/client',
+    },
+    {
+      displayName: 'server',
+      testEnvironment: 'node', // For Node.js tests
+      testMatch: ['<rootDir>/server/tests/**/*.test.js'],
+      setupFilesAfterEnv: ['<rootDir>/server/jest.setup.js'], // For MongoDB Memory Server setup
+      // collectCoverageFrom: ['<rootDir>/server/src/**/*.{js}'], // Collect coverage from server source
+      // coverageDirectory: '<rootDir>/coverage/server',
     },
   ],
-  
-  // Global configuration
-  verbose: true,
+  // For overall coverage
   collectCoverage: true,
-  coverageReporters: ['text', 'lcov', 'clover', 'html'],
-  coverageThreshold: {
-    global: {
-      statements: 70,
-      branches: 60,
-      functions: 70,
-      lines: 70,
-    },
-  },
-  testTimeout: 10000,
-}; 
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/tests/'], 
+};

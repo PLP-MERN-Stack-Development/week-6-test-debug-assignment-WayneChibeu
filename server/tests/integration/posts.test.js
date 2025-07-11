@@ -1,23 +1,28 @@
 // posts.test.js - Integration tests for posts API endpoints
 
+jest.setTimeout(30000);
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('../../src/app');
-const Post = require('../../src/models/Post');
-const User = require('../../src/models/User');
-const { generateToken } = require('../../src/utils/auth');
+const Post = require('../../models/Post');
+const User = require('../../models/User');
+const { generateToken } = require('../../utils/auth');
 
 let mongoServer;
+let app;
 let token;
 let userId;
 let postId;
 
 // Setup in-memory MongoDB server before all tests
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
+  mongoServer = await MongoMemoryServer.create({
+    binary: { downloadTimeout: 600000 }, // 10 minutes for download
+    instance: { startupTimeout: 600000 } // 10 minutes for startup
+  });
   const mongoUri = mongoServer.getUri();
-  await mongoose.connect(mongoUri);
+  process.env.MONGO_URI = mongoUri; // Set before requiring the app
+  app = require('../../src/index'); // Now require the app
 
   // Create a test user
   const user = await User.create({
@@ -33,7 +38,7 @@ beforeAll(async () => {
     title: 'Test Post',
     content: 'This is a test post content',
     author: userId,
-    category: mongoose.Types.ObjectId(),
+    category: new mongoose.Types.ObjectId(),
     slug: 'test-post',
   });
   postId = post._id;
@@ -42,7 +47,7 @@ beforeAll(async () => {
 // Clean up after all tests
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongoServer.stop();
+  if (mongoServer) await mongoServer.stop();
 });
 
 // Clean up database between tests
@@ -62,7 +67,7 @@ describe('POST /api/posts', () => {
     const newPost = {
       title: 'New Test Post',
       content: 'This is a new test post content',
-      category: mongoose.Types.ObjectId().toString(),
+      category: new mongoose.Types.ObjectId().toString(),
     };
 
     const res = await request(app)
@@ -81,7 +86,7 @@ describe('POST /api/posts', () => {
     const newPost = {
       title: 'Unauthorized Post',
       content: 'This should not be created',
-      category: mongoose.Types.ObjectId().toString(),
+      category: new mongoose.Types.ObjectId().toString(),
     };
 
     const res = await request(app)
@@ -95,7 +100,7 @@ describe('POST /api/posts', () => {
     const invalidPost = {
       // Missing title
       content: 'This post is missing a title',
-      category: mongoose.Types.ObjectId().toString(),
+      category: new mongoose.Types.ObjectId().toString(),
     };
 
     const res = await request(app)
@@ -118,7 +123,7 @@ describe('GET /api/posts', () => {
   });
 
   it('should filter posts by category', async () => {
-    const categoryId = mongoose.Types.ObjectId().toString();
+    const categoryId = new mongoose.Types.ObjectId();
     
     // Create a post with specific category
     await Post.create({
@@ -130,12 +135,12 @@ describe('GET /api/posts', () => {
     });
 
     const res = await request(app)
-      .get(`/api/posts?category=${categoryId}`);
+      .get(`/api/posts?category=${categoryId.toString()}`);
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toBeGreaterThan(0);
-    expect(res.body[0].category).toBe(categoryId);
+    expect(res.body[0].category).toBe(categoryId.toString());
   });
 
   it('should paginate results', async () => {
@@ -146,7 +151,7 @@ describe('GET /api/posts', () => {
         title: `Pagination Post ${i}`,
         content: `Content for pagination test ${i}`,
         author: userId,
-        category: mongoose.Types.ObjectId(),
+        category: new mongoose.Types.ObjectId(),
         slug: `pagination-post-${i}`,
       });
     }
@@ -177,7 +182,7 @@ describe('GET /api/posts/:id', () => {
   });
 
   it('should return 404 for non-existent post', async () => {
-    const nonExistentId = mongoose.Types.ObjectId();
+    const nonExistentId = new mongoose.Types.ObjectId();
     const res = await request(app)
       .get(`/api/posts/${nonExistentId}`);
 

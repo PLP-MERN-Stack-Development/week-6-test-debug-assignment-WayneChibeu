@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1752238442049" clover="3.2.0">
+  <project timestamp="1752238442049" name="All files">
+    <metrics statements="12" coveredstatements="11" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0" elements="15" coveredelements="11" complexity="0" loc="12" ncloc="12" packages="2" files="3" classes="3"/>
+    <package name="models">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Post.js" path="C:\Users\Wayne\OneDrive\Desktop\MERN Stack assignments\week-6-test-debug-assignment-WayneChibeu\server\models\Post.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+      <file name="User.js" path="C:\Users\Wayne\OneDrive\Desktop\MERN Stack assignments\week-6-test-debug-assignment-WayneChibeu\server\models\User.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="4" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="auth.js" path="C:\Users\Wayne\OneDrive\Desktop\MERN Stack assignments\week-6-test-debug-assignment-WayneChibeu\server\utils\auth.js">
+        <metrics statements="4" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="8" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

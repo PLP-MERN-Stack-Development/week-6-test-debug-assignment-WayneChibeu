@@ -1,88 +1,154 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19910736&assignment_repo_type=AssignmentRepo)
-# Testing and Debugging MERN Applications
+# MERN Stack Assignment: Testing & Debugging
 
-This assignment focuses on implementing comprehensive testing strategies for a MERN stack application, including unit testing, integration testing, and end-to-end testing, along with debugging techniques.
+## Project Overview
+This project is a MERN stack application with a React frontend and an Express backend. The focus is on implementing, testing, and debugging both client and server code. The project includes unit, integration, and (optionally) E2E tests, as well as code coverage reporting.
 
-## Assignment Overview
+---
 
-You will:
-1. Set up testing environments for both client and server
-2. Write unit tests for React components and server functions
-3. Implement integration tests for API endpoints
-4. Create end-to-end tests for critical user flows
-5. Apply debugging techniques for common MERN stack issues
-
-## Project Structure
-
+## Directory Structure
 ```
-mern-testing/
-├── client/                 # React front-end
-│   ├── src/                # React source code
-│   │   ├── components/     # React components
-│   │   ├── tests/          # Client-side tests
-│   │   │   ├── unit/       # Unit tests
-│   │   │   └── integration/ # Integration tests
-│   │   └── App.jsx         # Main application component
-│   └── cypress/            # End-to-end tests
-├── server/                 # Express.js back-end
-│   ├── src/                # Server source code
-│   │   ├── controllers/    # Route controllers
-│   │   ├── models/         # Mongoose models
-│   │   ├── routes/         # API routes
-│   │   └── middleware/     # Custom middleware
-│   └── tests/              # Server-side tests
-│       ├── unit/           # Unit tests
-│       └── integration/    # Integration tests
-├── jest.config.js          # Jest configuration
-└── package.json            # Project dependencies
+week-6-test-debug-assignment-WayneChibeu/
+  client/      # React frontend
+  server/      # Express backend
+  coverage/    # Coverage reports
+  ...
 ```
 
-## Getting Started
+---
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week6-Assignment.md` file
-4. Explore the starter code and existing tests
-5. Complete the tasks outlined in the assignment
+## Setup Instructions
 
-## Files Included
+### Prerequisites
+- Node.js (v16+ recommended)
+- npm or pnpm
 
-- `Week6-Assignment.md`: Detailed assignment instructions
-- Starter code for a MERN application with basic test setup:
-  - Sample React components with test files
-  - Express routes with test files
-  - Jest and testing library configurations
-  - Example tests for reference
+### Install Dependencies
+#### Frontend
+```bash
+cd client
+npm install
+```
+#### Backend
+```bash
+cd server
+npm install
+```
 
-## Requirements
+---
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Basic understanding of testing concepts
+## Running the App
+#### Frontend
+```bash
+cd client
+npm start
+```
+#### Backend
+```bash
+cd server
+npm start
+```
 
-## Testing Tools
+---
 
-- Jest: JavaScript testing framework
-- React Testing Library: Testing utilities for React
-- Supertest: HTTP assertions for API testing
-- Cypress/Playwright: End-to-end testing framework
-- MongoDB Memory Server: In-memory MongoDB for testing
+## Running Tests
+#### Frontend Unit Tests
+```bash
+cd client
+npm test
+```
+#### Backend Integration Tests
+```bash
+cd server
+npm test
+```
 
-## Submission
+---
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## Generating Coverage Reports
+#### Frontend
+```bash
+cd client
+npm run test:coverage
+```
+#### Backend
+```bash
+cd server
+npm run test:coverage
+```
 
-1. Complete all required tests (unit, integration, and end-to-end)
-2. Achieve at least 70% code coverage for unit tests
-3. Document your testing strategy in the README.md
-4. Include screenshots of your test coverage reports
-5. Demonstrate debugging techniques in your code
+---
 
-## Resources
+## Known Issues & Troubleshooting
 
-- [Jest Documentation](https://jestjs.io/docs/getting-started)
-- [React Testing Library Documentation](https://testing-library.com/docs/react-testing-library/intro/)
-- [Supertest Documentation](https://github.com/visionmedia/supertest)
-- [Cypress Documentation](https://docs.cypress.io/)
-- [MongoDB Testing Best Practices](https://www.mongodb.com/blog/post/mongodb-testing-best-practices) 
+### 1. Backend: `mongodb-memory-server` Fails on Windows
+- **Symptom:** Backend tests time out or fail to start due to `mongodb-memory-server` issues on Windows.
+- **Troubleshooting Steps Attempted:**
+  - Increased Jest timeouts
+  - Cleared npm and Jest caches
+  - Reinstalled dependencies
+  - Ran as administrator
+  - Checked for antivirus/firewall interference
+- **Outcome:** Issue persists. This is a [well-documented problem](https://github.com/nodkz/mongodb-memory-server/issues/915) on Windows.
+- **Workaround:** Document the error and troubleshooting steps. Backend tests may not run on Windows.
+
+### 2. E2E Testing: Cypress Fails to Install/Verify on Windows
+- **Symptom:** Cypress install or verification times out or fails on Windows.
+- **Troubleshooting Steps Attempted:**
+  - Cleared Cypress cache
+  - Reinstalled Cypress
+  - Disabled antivirus/firewall
+  - Ran as administrator
+  - Shortened project path
+  - Tried older Cypress versions
+- **Outcome:** Issue persists. See [Cypress Windows install issues](https://github.com/cypress-io/cypress/issues/19299).
+- **Workaround:** Document the error and troubleshooting steps. E2E tests may not run on Windows.
+
+---
+
+## Debugging Tips
+
+- **Frontend (React):**
+  - Use browser developer tools (Console, Network, React DevTools) to inspect component state, props, and errors.
+  - The app now includes an Error Boundary to catch and display UI errors gracefully.
+
+- **Backend (Node.js/Express):**
+  - Use `console.log`, `console.error`, and breakpoints in your IDE for server-side debugging.
+  - The server now includes a global error handler middleware to catch and respond to errors in a consistent way.
+  - You can run the server with `node --inspect src/index.js` and connect a debugger (e.g., Chrome DevTools or VSCode) for step-by-step debugging.
+
+---
+
+## Screenshots
+- **Frontend Tests (Passing):**
+  
+  ![Frontend Tests Passing](./frontend-tests.PNG)
+  
+- **Backend Tests (Error):**
+  
+  ![Backend Test Error](./backend-error.PNG)
+  
+- **E2E (Cypress) Error:**
+  - Include a screenshot of the Cypress install/verification error, if attempted.
+
+---
+
+## Summary of Troubleshooting & Fixes
+- Ensured Babel and Jest are configured for JSX in the frontend (`@babel/preset-env`, `@babel/preset-react`, `babel-jest`).
+- All frontend unit tests and coverage pass.
+- Backend tests fail due to a known Windows issue with `mongodb-memory-server`.
+- E2E (Cypress) tests could not be run due to persistent verification timeouts on Windows.
+- All troubleshooting steps and known issues are documented above.
+
+---
+
+## References
+- [mongodb-memory-server Windows Issue](https://github.com/nodkz/mongodb-memory-server/issues/915)
+- [Cypress Windows Install Issue](https://github.com/cypress-io/cypress/issues/19299)
+
+---
+
+## Submission Checklist
+- [x] All frontend tests and coverage passing (with screenshot)
+- [x] Backend test error and troubleshooting documented (with screenshot)
+- [x] E2E (Cypress) error and troubleshooting documented (with screenshot, if attempted)
+- [x] README updated with all steps, issues, and references 
